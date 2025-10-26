@@ -64,7 +64,6 @@ type UpCmd struct {
 	GPGAgentForwarding bool
 	OpenIDE            bool
 	Reconfigure        bool
-	DisableSELinuxFlag bool
 
 	SSHConfigPath string
 

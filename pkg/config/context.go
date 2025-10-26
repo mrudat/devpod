@@ -108,7 +108,7 @@ var ContextOptions = []ContextOption{
 	},
 	{
 		Name:        ContextOptionDisableSELinuxFlag,
-		Description: "Enables adding the :z suffix to volume mounts to avoid SELinux enforcement issues",
+		Description: "Adds the z flag to the workspace mounts to disable SELinux",
 		Default:     "false",
 		Enum:        []string{"true", "false"},
 	},

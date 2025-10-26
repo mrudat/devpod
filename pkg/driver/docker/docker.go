@@ -273,6 +273,7 @@ func (d *dockerDriver) RunDockerDevContainer(
 			mountPath = strings.Replace(mountPath, ",consistency='consistent'", "", 1)
 		}
 
+		// TODO somehow store DisableSELinuxFlag in options?
 		if ok, err := helper.SELinuxEnabled(ctx); ok && err == nil {
 			mountPath = fmt.Sprintf("%s,z", mountPath)
 		} else if err != nil {

@@ -64,6 +64,7 @@ type UpCmd struct {
 	GPGAgentForwarding bool
 	OpenIDE            bool
 	Reconfigure        bool
+	DisableSELinuxFlag bool
 
 	SSHConfigPath string
 
@@ -89,6 +90,9 @@ func NewUpCmd(f *flags.GlobalFlags) *cobra.Command {
 
 			if devPodConfig.ContextOption(config.ContextOptionSSHStrictHostKeyChecking) == "true" {
 				cmd.StrictHostKeyChecking = true
+			}
+			if devPodConfig.ContextOption(config.ContextOptionDisableSELinuxFlag) == "true" {
+				cmd.DisableSELinuxFlag = true
 			}
 
 			ctx, cancel := WithSignals(cobraCmd.Context())
@@ -117,6 +121,7 @@ func NewUpCmd(f *flags.GlobalFlags) *cobra.Command {
 	upCmd.Flags().BoolVar(&cmd.Reconfigure, "reconfigure", false, "Reconfigure the options for this workspace. Only supported in DevPod Pro right now.")
 	upCmd.Flags().BoolVar(&cmd.Recreate, "recreate", false, "If true will remove any existing containers and recreate them")
 	upCmd.Flags().BoolVar(&cmd.Reset, "reset", false, "If true will remove any existing containers including sources, and recreate them")
+	upCmd.Flags().BoolVar(&cmd.DisableSELinuxFlag, "disable-selinux-flag", false, "If true will add a :z suffix to all volume mounts to disable SELinux enforcement issues")
 	upCmd.Flags().StringSliceVar(&cmd.PrebuildRepositories, "prebuild-repository", []string{}, "Docker repository that hosts devpod prebuilds for this workspace")
 	upCmd.Flags().StringArrayVar(&cmd.WorkspaceEnv, "workspace-env", []string{}, "Extra env variables to put into the workspace. E.g. MY_ENV_VAR=MY_VALUE")
 	upCmd.Flags().StringSliceVar(&cmd.WorkspaceEnvFile, "workspace-env-file", []string{}, "The path to files containing a list of extra env variables to put into the workspace. E.g. MY_ENV_VAR=MY_VALUE")
